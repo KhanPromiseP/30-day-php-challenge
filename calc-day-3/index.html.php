@@ -17,7 +17,7 @@ include 'index.php';
         border: 2px solid black;
         box-sizing: border-box;
         width: 30%;
-        height: 300px;
+        height: 320px;
         position: absolute;
         align-items: center;
         margin: auto;
@@ -32,6 +32,14 @@ include 'index.php';
 
 
 
+
+
+    button:hover {
+        background-color: darkgray;
+        color: white;
+    }
+
+
     button {
         padding: 10px;
         font-size: 18px;
@@ -41,6 +49,26 @@ include 'index.php';
         background-color: slategray;
         color: white;
         border-radius: 5px;
+    }
+
+    input[type=answer] {
+        width: 50%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        box-sizing: border-box;
+        border: none;
+        background-color: lightgray;
+        color: black;
+        border-radius: 5px;
+        text-align: center;
+        border: 1px solid black;
+        ;
+
+    }
+
+    input[type=text] {
+        border: 2px solid black;
+        border-radius: 3px;
     }
     </style>
 
@@ -63,11 +91,10 @@ include 'index.php';
         </select><br><label for="num2">Enter num2:</label><br>
         <input type="text" id="num2" name="num2"><br>
         <button type="submit" name="answer" id="answer" value="answer">Calculate</button>
+        <div class="result">
+            <input type="answer" id="result" disabled value="<?php echo $result;?>" placeholder="answer">
+        </div>
     </form>
-    <div id="result">
-        <?php
-        if(isset($_POST['answer'])==true){ echo  $result;} ?>
-    </div>
-</body>
+
 
 </html>
