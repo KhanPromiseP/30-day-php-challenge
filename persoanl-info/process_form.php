@@ -1,5 +1,5 @@
 <?php
-   
+   if($_SERVER['REQUEST_METHOD']  == 'POST') {
     if(isset($_POST['submit'])){
 
         function test_input($data) {
@@ -8,6 +8,7 @@
             $data = htmlspecialchars($data);
             return $data;
           }
+        
     
     $fname=test_input($_POST['fname']);
     $lname=test_input($_POST['lname']);
@@ -42,6 +43,6 @@
          }
 
 
-
+        }
 
          
