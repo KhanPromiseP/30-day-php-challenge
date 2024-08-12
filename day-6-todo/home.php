@@ -9,9 +9,11 @@
 
 <body>
     <div class="header">
-        <h2>Hello <?php $_SESSION['username']?></h2><br>
+        <h2>Hello <?php $_SESSION['username'] ?></h2><br>
         <h4>You have 1 uncomplete task!</h4>
     </div>
+    <input type="text" name="searchbar" value="search" placeholder="search task..."></input>
+    <input type="button" name="seachbtn">Search</input>
 </body>
 
 </html>
