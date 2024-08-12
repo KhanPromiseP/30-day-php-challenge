@@ -5,7 +5,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['login'])) {
     $username = filter_var($_POST['username']);
     $password = $_POST['password'];
 
-    
+
     $_SESSION['passwordLower'] = '';
     $_SESSION['passwordUpper'] = '';
     $_SESSION['passwordNumber'] = '';
@@ -14,31 +14,37 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['login'])) {
     validate($username, $password);
     //if(validate($username, $password)){
 
-     if (empty($_SESSION['passwordLower']) && empty($_SESSION['passwordUpper']) && empty($_SESSION['passwordNumber']) &&
-        empty($_SESSION['username_and_password']) && empty($_SESSION['length'])) {
-        
-            $_SESSION['username'] = $username;
-            $_SESSION['password'] = $password;
-            header("Location: success.php");
-            exit();
-        } else {
+    if (
+        empty($_SESSION['passwordLower']) && empty($_SESSION['passwordUpper']) && empty($_SESSION['passwordNumber']) &&
+        empty($_SESSION['username_and_password']) && empty($_SESSION['length'])
+    ) {
 
-            // $_SESSION['username_and_password'] = "Invalid username or password";
+        $_SESSION['username'] = htmlspecialchars($username);
+        $_SESSION['password'] = filter_var($password);
+        header("Location: success.php");
+        exit();
+    } else {
+
+        // $_SESSION['username_and_password'] = "Invalid username or password";
         //}
-    
 
-    header("Location:logins.php");
-    exit();
-}
+
+        header("Location:logins.php");
+        exit();
+    }
 }
 
-function validate($username, $password) {
+function validate($username, $password)
+{
     if (empty($username) || empty($password)) {
         $_SESSION['username_and_password'] = "Username and Password cannot be empty";
     }
 
-    if (strlen($password) < 3 || strlen($username) < 3) {
-        $_SESSION['length'] = "Username and Password cannot be less than 3 characters";
+    if (strlen($password) < 8) {
+        $_SESSION['plength'] = "Password cannot be less than 3 characters";
+    }
+    if (strlen($username) < 5 || strlen($username) > 15) {
+        $_SESSION['nlength'] = "Username must be at between 5 and 15 characters";
     }
 
     $hasLowerCase = false;

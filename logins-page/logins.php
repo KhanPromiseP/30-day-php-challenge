@@ -21,19 +21,22 @@ session_start();
         <small>
             <?php
             if (isset($_SESSION['passwordLower'])) {
-                echo $_SESSION['passwordLower'].'<br>'; 
+                echo $_SESSION['passwordLower'] . '<br>';
             }
             if (isset($_SESSION['passwordUpper'])) {
-                echo $_SESSION['passwordUpper'].'<br>';
+                echo $_SESSION['passwordUpper'] . '<br>';
             }
             if (isset($_SESSION['passwordNumber'])) {
-                echo $_SESSION['passwordNumber'].'<br>';
+                echo $_SESSION['passwordNumber'] . '<br>';
             }
             if (isset($_SESSION['username_and_password'])) {
-                echo $_SESSION['username_and_password'].'<br>';
+                echo $_SESSION['username_and_password'] . '<br>';
             }
-            if (isset($_SESSION['length'])) {
-                echo $_SESSION['length'].'<br>';
+            if (isset($_SESSION['plength'])) {
+                echo $_SESSION['plength'] . '<br>';
+            }
+            if (isset($_SESSION['nlength'])) {
+                echo $_SESSION['nlength'] . '<br>';
             }
             ?>
         </small>
