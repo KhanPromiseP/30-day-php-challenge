@@ -1,24 +1,23 @@
 <?php
-session_start();
-include_once 'app.php';
+require_once 'logic.php';
 
+$index = $_GET['index'] ?? null;
+$task = getTask($index);
 
-if (isset($_GET['index'])) {
-    $index = (int)$_GET['index'];
-    $task = $_SESSION['tasks'][$index];
-}
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && $task !== null) {
     $name = $_POST['name'];
     $description = $_POST['description'];
     $priority = $_POST['priority'];
     $deadline = $_POST['deadline'];
 
-    if ($name && $description && $priority && $deadline) {
-        updateTask($index, $name, $description, $priority, $deadline);
-        // header('Location: tasks.php'); 
-        exit();
-    }
+    updateTask($index, $name, $description, $priority, $deadline);
+    header('Location: index.php');
+    exit;
+}
+
+if ($task === null) {
+    header('Location: index.php');
+    exit;
 }
 ?>
 
@@ -27,29 +26,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <head>
     <meta charset="UTF-8">
-    <title>Update Task</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Task</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
+<main>
 
-<body>
-    <h1>Update Task</h1>
-    <form method="POST" action="">
-        <label for="name">Task Name:</label><br>
-        <input type="text" id="name" name="name" value="<?php echo htmlspecialchars($task['name']); ?>"
-            required><br><br>
-
-        <label for="priority">Priority:</label><br>
-        <select id="priority" name="priority" required>
-            <option value="1" <?php echo $task['priority'] == 1 ? 'selected' : ''; ?>>Low</option>
-            <option value="2" <?php echo $task['priority'] == 2 ? 'selected' : ''; ?>>Medium</option>
-            <option value="3" <?php echo $task['priority'] == 3 ? 'selected' : ''; ?>>High</option>
-        </select><br><br>
-
-        <label for="deadline">Deadline:</label><br>
-        <input type="datetime-local" id="deadline" name="deadline"
-            value="<?php echo htmlspecialchars($task['deadline']); ?>" required><br><br>
-
-        <input type="submit" value="Update Task">
-    </form>
-</body>
+    <body>
+        <header>
+            <h1>Edit Task</h1>
+            <nav>
+                <a href="index.php">Back to Task List</a>
+            </nav>
+        </header><br>
+        <form method="POST">
+            Task name:<br><input type="text" name="name" value="<?= htmlspecialchars($task['name']) ?>" required><br>
+            description:<br><input type="text" name="description" value="<?= htmlspecialchars($task['description']) ?>" required><br>
+            <select name="priority" required><br>
+                <option value="High" <?= $task['priority'] === 'High' ? 'selected' : '' ?>>High</option>
+                <option value="Medium" <?= $task['priority'] === 'Medium' ? 'selected' : '' ?>>Medium</option>
+                <option value="Low" <?= $task['priority'] === 'Low' ? 'selected' : '' ?>>Low</option>
+            </select><br>
+            Deadline:<br><input type="date" name="deadline" value="<?= htmlspecialchars($task['deadline']) ?>" required><br>
+            <button type="submit">Update Task</button>
+        </form>
+    </body>
+    <main>
 
 </html>
